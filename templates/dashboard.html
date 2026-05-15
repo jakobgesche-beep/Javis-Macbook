@@ -570,6 +570,8 @@ async function addQuickTask() {
 }
 
 // ── Passwords ─────────────────────────────────────────────────────────────
+function statusLabel(s) { return ({ok:'✓ OK', wrong:'✗ Falsch', unknown:'?'})[s] || s; }
+
 let passwords = [];
 async function loadPasswords() {
   const d = await fetch('/api/passwords').then(r => r.json());
@@ -587,7 +589,7 @@ async function loadPasswords() {
       <td><strong>${e.site}</strong></td>
       <td>${e.username || '—'}</td>
       <td><code style="color:var(--muted)">${e.password_masked}</code></td>
-      <td><span class="pw-status ${e.status}">${{ok:'✓ OK',wrong:'✗ Falsch',unknown:'?'}[e.status]||e.status}</span></td>
+      <td><span class="pw-status ${e.status}">${statusLabel(e.status)}</span></td>
       <td><div class="gap">
         <button class="btn-sm btn-ghost" onclick="revealPassword('${e.id}')">Zeigen</button>
         ${e.status !== 'ok' ? `<button class="btn-sm btn-green" onclick="markOk('${e.id}')">✓</button>` : ''}
