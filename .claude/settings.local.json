@@ -52,7 +52,17 @@
       "Bash(cp -r dist/Jarvis.app /tmp/jarvis-dmg/)",
       "Bash(ln -sf /Applications /tmp/jarvis-dmg/Applications)",
       "Bash(hdiutil create *)",
-      "Bash(git commit *)"
+      "Bash(git commit *)",
+      "Bash(curl -s -X POST http://127.0.0.1:8080/api/start)",
+      "Bash(curl -s http://127.0.0.1:8080/api/status)",
+      "Bash(curl -s -X POST http://127.0.0.1:8080/api/mode -H \"Content-Type: application/json\" -d '{\"mode\":\"programmieren\"}')",
+      "Bash(curl -s -X POST http://127.0.0.1:8080/api/mode -H \"Content-Type: application/json\" -d '{\"mode\":\"pause\"}')",
+      "Bash(curl -s -X POST http://127.0.0.1:8080/api/stop)",
+      "Bash(curl -s http://127.0.0.1:8080/api/tasks)",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\('Tasks OK, Länge:', len\\(d['content']\\)\\)\")",
+      "Bash(curl -s http://127.0.0.1:8080/api/config)",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\('auto_confirm_vscode:', d.get\\('auto_confirm_vscode'\\), '| single_vscode_window:', d.get\\('single_vscode_window'\\)\\)\")",
+      "Bash(curl -s -X POST http://127.0.0.1:8080/api/mode -H \"Content-Type: application/json\" -d '{\"mode\":\"musik\"}' -w \"\\\\nHTTP: %{http_code}\")"
     ]
   }
 }

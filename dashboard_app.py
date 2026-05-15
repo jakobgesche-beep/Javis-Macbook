@@ -73,14 +73,31 @@ def create_app(state, state_lock, config_file, tasks_file, modes_dir):
 
     @app.route("/api/mode", methods=["POST"])
     def api_mode():
+        import threading as _t
         data = request.get_json()
         mode = data.get("mode", "")
-        ok = computer.apply_mode(mode, str(modes_dir))
-        if ok:
-            with state_lock:
-                state["current_mode"] = mode
-            cfg = load_cfg(); cfg["current_mode"] = mode; save_cfg(cfg)
-        return jsonify({"ok": ok})
+        if not (modes_dir / f"{mode}.json").exists():
+            return jsonify({"ok": False})
+        # State sofort aktualisieren, Aktionen im Hintergrund ausführen
+        with state_lock:
+            state["current_mode"] = mode
+        cfg = load_cfg(); cfg["current_mode"] = mode; save_cfg(cfg)
+        _t.Thread(target=computer.apply_mode, args=(mode, str(modes_dir)), daemon=True).start()
+        return jsonify({"ok": True})
+
+    @app.route("/api/projects")
+    def api_projects():
+        cfg = load_cfg()
+        root = Path(cfg.get("project_root", str(Path.home())))
+        try:
+            dirs = sorted([
+                {"name": p.name, "path": str(p)}
+                for p in root.iterdir()
+                if p.is_dir() and not p.name.startswith(".")
+            ], key=lambda x: x["name"].lower())
+        except Exception:
+            dirs = []
+        return jsonify({"projects": dirs, "root": str(root)})
 
     @app.route("/api/tasks")
     def api_tasks():
@@ -104,7 +121,7 @@ def create_app(state, state_lock, config_file, tasks_file, modes_dir):
         cfg = load_cfg()
         for key in ["max_retries","claude_code_timeout","auto_start","auto_confirm_vscode",
                     "single_vscode_window","enforce_claude_vscode","password_manager_enabled",
-                    "password_clipboard_capture","jarvis_project_path"]:
+                    "password_clipboard_capture","jarvis_project_path","project_root"]:
             if key in data:
                 cfg[key] = data[key]
         if data.get("anthropic_api_key"): cfg["anthropic_api_key"] = data["anthropic_api_key"]

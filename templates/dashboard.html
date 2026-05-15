@@ -9,145 +9,158 @@
     :root {
       --bg: #0a0a0f; --surface: #12121a; --border: #1e1e2e;
       --accent: #7c3aed; --accent2: #06b6d4;
-      --green: #10b981; --red: #ef4444; --yellow: #f59e0b; --orange: #f97316;
+      --green: #10b981; --red: #ef4444; --yellow: #f59e0b;
       --text: #e2e8f0; --muted: #64748b;
     }
     body { background: var(--bg); color: var(--text); font-family: 'SF Mono','Fira Code',monospace; font-size: 13px; line-height: 1.6; min-height: 100vh; }
-    header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; }
-    .logo { font-size: 18px; font-weight: 700; }
+
+    header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-size: 16px; font-weight: 700; }
     .logo span { color: var(--accent); }
-    .header-right { display: flex; align-items: center; gap: 12px; }
-    .status-badge { display: flex; align-items: center; gap: 8px; padding: 5px 12px; border-radius: 999px; border: 1px solid var(--border); font-size: 12px; }
-    .status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); }
-    .status-badge.running .status-dot { background: var(--green); box-shadow: 0 0 8px var(--green); animation: pulse 1.5s infinite; }
+    .header-right { display: flex; align-items: center; gap: 10px; }
+    .status-badge { display: flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--border); font-size: 11px; }
+    .status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--muted); }
+    .status-badge.running .status-dot { background: var(--green); box-shadow: 0 0 6px var(--green); animation: pulse 1.5s infinite; }
     @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
 
     /* Tabs */
-    .tabs { display: flex; gap: 2px; background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 24px; }
-    .tab { padding: 10px 18px; cursor: pointer; font-size: 12px; color: var(--muted); border-bottom: 2px solid transparent; transition: all .15s; }
+    .tabs { display: flex; gap: 2px; background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 20px; }
+    .tab { padding: 9px 16px; cursor: pointer; font-size: 12px; color: var(--muted); border-bottom: 2px solid transparent; transition: all .15s; user-select: none; }
     .tab.active { color: var(--text); border-bottom-color: var(--accent); }
     .tab:hover:not(.active) { color: var(--text); }
-    .tab-badge { background: var(--red); color: white; border-radius: 999px; padding: 1px 6px; font-size: 10px; margin-left: 4px; }
+    .tab-badge { background: var(--red); color: white; border-radius: 999px; padding: 1px 5px; font-size: 9px; margin-left: 4px; }
 
     /* Panels */
-    .panel { display: none; padding: 20px 24px; }
+    .panel { display: none; padding: 16px 20px; }
     .panel.active { display: block; }
 
-    /* Grid */
-    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
-
-    /* Card */
-    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px; }
-    .card-title { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 14px; }
+    /* Cards */
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin-bottom: 14px; }
+    .card-title { font-size: 9px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 12px; }
 
     /* Buttons */
-    button { padding: 8px 16px; border-radius: 8px; border: none; font-family: inherit; font-size: 13px; cursor: pointer; transition: all .15s; }
+    button { padding: 7px 14px; border-radius: 7px; border: none; font-family: inherit; font-size: 12px; cursor: pointer; transition: all .12s; }
     .btn-primary { background: var(--accent); color: white; }
     .btn-primary:hover { background: #6d28d9; }
+    .btn-primary:active { transform: scale(.97); }
     .btn-danger { background: transparent; color: var(--red); border: 1px solid var(--red); }
     .btn-danger:hover { background: rgba(239,68,68,.1); }
     .btn-ghost { background: transparent; color: var(--text); border: 1px solid var(--border); }
     .btn-ghost:hover { border-color: var(--accent2); color: var(--accent2); }
     .btn-green { background: var(--green); color: white; }
-    .btn-sm { padding: 4px 10px; font-size: 11px; }
-    .btn-mode { background: transparent; color: var(--text); border: 1px solid var(--border); display: flex; align-items: center; gap: 6px; }
-    .btn-mode:hover,.btn-mode.active { border-color: var(--accent2); color: var(--accent2); background: rgba(6,182,212,.08); }
+    .btn-sm { padding: 3px 9px; font-size: 11px; }
 
-    /* Controls bar */
-    .controls-bar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
-    .divider { width: 1px; height: 28px; background: var(--border); }
-    .stats { display: flex; gap: 14px; margin-left: auto; }
+    /* Mode buttons */
+    .mode-bar { display: flex; gap: 6px; flex-wrap: wrap; }
+    .btn-mode { background: var(--surface); color: var(--muted); border: 1px solid var(--border); border-radius: 8px; padding: 7px 14px; font-size: 12px; cursor: pointer; transition: all .15s; }
+    .btn-mode:hover { border-color: var(--accent2); color: var(--accent2); }
+    .btn-mode.active { background: rgba(6,182,212,.12); border-color: var(--accent2); color: var(--accent2); font-weight: 600; }
+
+    /* Controls */
+    .ctrl-row { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
+    .stats { display: flex; gap: 16px; margin-left: auto; }
     .stat { text-align: center; }
     .stat-num { font-size: 20px; font-weight: 700; }
-    .stat-label { font-size: 10px; color: var(--muted); text-transform: uppercase; }
+    .stat-label { font-size: 9px; color: var(--muted); text-transform: uppercase; }
     .stat-num.green { color: var(--green); }
     .stat-num.yellow { color: var(--yellow); }
     .stat-num.red { color: var(--red); }
 
-    /* Current task */
-    .current-task { padding: 10px 14px; background: rgba(124,58,237,.08); border: 1px solid rgba(124,58,237,.3); border-radius: 8px; font-size: 13px; }
+    .current-task { padding: 9px 12px; background: rgba(124,58,237,.08); border: 1px solid rgba(124,58,237,.25); border-radius: 7px; font-size: 12px; }
     .current-task.idle { background: transparent; border-color: var(--border); color: var(--muted); }
 
+    /* Projects grid */
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 8px; margin-bottom: 14px; }
+    .project-card { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 12px; cursor: pointer; transition: all .15s; }
+    .project-card:hover { border-color: var(--accent); }
+    .project-card.selected { border-color: var(--accent2); background: rgba(6,182,212,.06); }
+    .project-name { font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+    .project-path { font-size: 10px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    /* Task add */
+    .task-add-row { display: flex; gap: 8px; align-items: flex-end; }
+    .task-add-row input { flex: 1; background: var(--bg); border: 1px solid var(--border); border-radius: 7px; padding: 8px 11px; color: var(--text); font-family: inherit; font-size: 12px; outline: none; }
+    .task-add-row input:focus { border-color: var(--accent); }
+
+    /* Task queue */
+    .task-list { display: flex; flex-direction: column; gap: 5px; }
+    .task-item { display: flex; align-items: center; gap: 10px; padding: 9px 12px; background: var(--bg); border: 1px solid var(--border); border-radius: 7px; font-size: 12px; }
+    .task-item.active-task { border-color: var(--accent); background: rgba(124,58,237,.06); }
+    .task-item.done { opacity: .45; }
+    .task-badge { font-size: 10px; padding: 1px 7px; border-radius: 999px; border: 1px solid var(--border); color: var(--muted); white-space: nowrap; }
+    .task-badge.proj { border-color: rgba(6,182,212,.4); color: var(--accent2); }
+
     /* Log */
-    .log-list { height: 300px; overflow-y: auto; display: flex; flex-direction: column; gap: 3px; }
-    .log-entry { display: flex; gap: 10px; padding: 5px 8px; border-radius: 5px; font-size: 11px; }
-    .log-entry:hover { background: rgba(255,255,255,.03); }
+    .log-list { height: 360px; overflow-y: auto; display: flex; flex-direction: column; gap: 2px; }
+    .log-entry { display: flex; gap: 8px; padding: 4px 6px; border-radius: 4px; font-size: 11px; }
+    .log-entry:hover { background: rgba(255,255,255,.02); }
     .log-time { color: var(--muted); flex-shrink: 0; }
     .log-entry.warning .log-msg { color: var(--yellow); }
     .log-entry.error .log-msg { color: var(--red); }
 
-    /* Tasks editor */
-    textarea { width: 100%; height: 260px; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 10px; color: var(--text); font-family: inherit; font-size: 12px; resize: vertical; outline: none; }
-    textarea:focus { border-color: var(--accent); }
-
-    /* Form */
-    .form-group { margin-bottom: 14px; }
-    label { display: block; font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
-    input[type="text"],input[type="number"],input[type="password"],input[type="url"] { width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 9px 12px; color: var(--text); font-family: inherit; font-size: 13px; outline: none; }
+    /* Forms */
+    .form-group { margin-bottom: 12px; }
+    label { display: block; font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+    input[type="text"],input[type="number"],input[type="password"],input[type="url"] { width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: 7px; padding: 8px 11px; color: var(--text); font-family: inherit; font-size: 12px; outline: none; }
     input:focus { border-color: var(--accent); }
+    select { width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: 7px; padding: 8px 11px; color: var(--text); font-family: inherit; font-size: 12px; outline: none; }
+    select:focus { border-color: var(--accent); }
 
     /* Toggle */
-    .toggle-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--border); }
+    .toggle-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--border); }
     .toggle-row:last-child { border-bottom: none; }
-    .toggle-label { font-size: 13px; }
-    .toggle-desc { font-size: 11px; color: var(--muted); margin-top: 2px; }
-    .toggle { position: relative; width: 40px; height: 22px; flex-shrink: 0; }
+    .toggle { position: relative; width: 38px; height: 20px; flex-shrink: 0; }
     .toggle input { opacity: 0; width: 0; height: 0; }
-    .toggle-slider { position: absolute; inset: 0; background: var(--border); border-radius: 22px; cursor: pointer; transition: .2s; }
-    .toggle-slider:before { content: ""; position: absolute; width: 16px; height: 16px; left: 3px; bottom: 3px; background: white; border-radius: 50%; transition: .2s; }
+    .toggle-slider { position: absolute; inset: 0; background: var(--border); border-radius: 20px; cursor: pointer; transition: .2s; }
+    .toggle-slider:before { content: ""; position: absolute; width: 14px; height: 14px; left: 3px; bottom: 3px; background: white; border-radius: 50%; transition: .2s; }
     .toggle input:checked + .toggle-slider { background: var(--accent); }
     .toggle input:checked + .toggle-slider:before { transform: translateX(18px); }
 
     /* Password table */
     .pw-table { width: 100%; border-collapse: collapse; }
-    .pw-table th { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); padding: 8px 10px; text-align: left; border-bottom: 1px solid var(--border); }
-    .pw-table td { padding: 10px; border-bottom: 1px solid rgba(30,30,46,.5); font-size: 12px; vertical-align: middle; }
-    .pw-table tr:hover td { background: rgba(255,255,255,.02); }
-    .pw-status { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 10px; font-weight: 600; }
+    .pw-table th { font-size: 9px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); padding: 7px 9px; text-align: left; border-bottom: 1px solid var(--border); }
+    .pw-table td { padding: 9px; border-bottom: 1px solid rgba(30,30,46,.5); font-size: 11px; vertical-align: middle; }
+    .pw-status { display: inline-block; padding: 1px 7px; border-radius: 999px; font-size: 9px; font-weight: 600; }
     .pw-status.ok { background: rgba(16,185,129,.15); color: var(--green); }
     .pw-status.wrong { background: rgba(239,68,68,.15); color: var(--red); }
     .pw-status.unknown { background: rgba(100,116,139,.15); color: var(--muted); }
 
-    /* Alert banner */
-    .alert-banner { background: rgba(249,115,22,.1); border: 1px solid rgba(249,115,22,.4); border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; }
+    /* Alert */
+    .alert-banner { background: rgba(249,115,22,.1); border: 1px solid rgba(249,115,22,.4); border-radius: 7px; padding: 10px 14px; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; }
     .alert-banner.hidden { display: none; }
-    .alert-text { font-size: 12px; color: #fb923c; }
-    .alert-actions { display: flex; gap: 8px; }
+    .alert-text { font-size: 11px; color: #fb923c; }
+    .alert-actions { display: flex; gap: 6px; }
 
-    /* Scrollbar */
-    ::-webkit-scrollbar { width: 4px; }
-    ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+    /* Grid */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+    /* Toast */
+    #toast { position: fixed; bottom: 20px; right: 20px; background: #1e1e2e; border: 1px solid var(--border); border-radius: 9px; padding: 10px 16px; font-size: 12px; z-index: 200; opacity: 0; transform: translateY(6px); transition: all .2s; pointer-events: none; }
+    #toast.show { opacity: 1; transform: translateY(0); }
+    #toast.success { border-color: var(--green); color: var(--green); }
+    #toast.error { border-color: var(--red); color: var(--red); }
+
+    /* Confirm modal */
+    #confirmModal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.7); z-index: 300; align-items: center; justify-content: center; }
+    #confirmModal.open { display: flex; }
+    #confirmBox { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 22px; width: 320px; }
+    #confirmMsg { margin-bottom: 16px; font-size: 13px; }
+    #confirmActions { display: flex; justify-content: flex-end; gap: 8px; }
 
     /* Modal */
     .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.7); display: none; align-items: center; justify-content: center; z-index: 100; }
     .modal-overlay.open { display: flex; }
-    .modal { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 24px; width: 420px; max-height: 80vh; overflow-y: auto; }
-    .modal h2 { font-size: 15px; margin-bottom: 18px; }
-    .modal-footer { display: flex; justify-content: flex-end; gap: 8px; margin-top: 18px; }
+    .modal { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 22px; width: 400px; }
+    .modal h2 { font-size: 14px; margin-bottom: 16px; }
+    .modal-footer { display: flex; justify-content: flex-end; gap: 8px; margin-top: 16px; }
 
-    /* Toast */
-    #toast { position:fixed; bottom:24px; right:24px; background:#1e1e2e; border:1px solid var(--border); border-radius:10px; padding:12px 18px; font-size:13px; z-index:200; opacity:0; transform:translateY(8px); transition:all .2s; pointer-events:none; }
-    #toast.show { opacity:1; transform:translateY(0); }
-    #toast.success { border-color:var(--green); color:var(--green); }
-    #toast.error { border-color:var(--red); color:var(--red); }
-
-    /* Confirm modal */
-    #confirmModal { display:none; position:fixed; inset:0; background:rgba(0,0,0,.7); z-index:300; align-items:center; justify-content:center; }
-    #confirmModal.open { display:flex; }
-    #confirmBox { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:24px; width:340px; }
-    #confirmMsg { margin-bottom:18px; font-size:14px; }
-    #confirmActions { display:flex; justify-content:flex-end; gap:10px; }
-
-    /* Info chip */
-    .chip { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 999px; font-size: 11px; border: 1px solid var(--border); color: var(--muted); }
+    .chip { display: inline-flex; align-items: center; gap: 4px; padding: 2px 9px; border-radius: 999px; font-size: 10px; border: 1px solid var(--border); color: var(--muted); }
     .chip.green { border-color: rgba(16,185,129,.4); color: var(--green); background: rgba(16,185,129,.08); }
     .chip.red { border-color: rgba(239,68,68,.4); color: var(--red); background: rgba(239,68,68,.08); }
-    .chip.yellow { border-color: rgba(245,158,11,.4); color: var(--yellow); background: rgba(245,158,11,.08); }
-
-    .mt { margin-top: 12px; }
-    .gap { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+    .gap { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+    .mt { margin-top: 10px; }
+    ::-webkit-scrollbar { width: 3px; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
   </style>
 </head>
 <body>
@@ -164,23 +177,21 @@
 </header>
 
 <div class="tabs">
-  <div class="tab active" onclick="showTab('tasks')">Tasks</div>
-  <div class="tab" onclick="showTab('log')">Log</div>
-  <div class="tab" onclick="showTab('passwords')">Passwörter <span class="tab-badge" id="pwAlertBadge" style="display:none">!</span></div>
-  <div class="tab" onclick="showTab('settings')">Einstellungen</div>
+  <div class="tab active" data-tab="prog" onclick="showTab('prog',this)">💻 Programmieren</div>
+  <div class="tab" data-tab="log" onclick="showTab('log',this)">📋 Log</div>
+  <div class="tab" data-tab="passwords" onclick="showTab('passwords',this)">🔐 Passwörter <span class="tab-badge" id="pwAlertBadge" style="display:none">!</span></div>
+  <div class="tab" data-tab="settings" onclick="showTab('settings',this)">⚙ Einstellungen</div>
 </div>
 
-<!-- ── Tab: Tasks ─────────────────────────────────────────────────────────── -->
-<div class="panel active" id="tab-tasks">
+<!-- ── Tab: Programmieren ──────────────────────────────────────────────────── -->
+<div class="panel active" id="tab-prog">
 
-  <div class="card" style="margin-bottom:16px">
-    <div class="controls-bar">
+  <!-- Steuerung -->
+  <div class="card">
+    <div class="ctrl-row">
       <button class="btn-primary" onclick="startJarvis()">▶ Starten</button>
       <button class="btn-danger" onclick="stopJarvis()">⏹ Stoppen</button>
-      <div class="divider"></div>
-      <div id="modeButtons" class="gap"></div>
-      <div class="divider"></div>
-      <button class="btn-ghost" onclick="openJarvisVSCode()">VS Code öffnen</button>
+      <button class="btn-ghost" onclick="openVSCode()">📂 VS Code</button>
       <div class="stats">
         <div class="stat"><div class="stat-num green" id="statDone">0</div><div class="stat-label">Erledigt</div></div>
         <div class="stat"><div class="stat-num yellow" id="statRetried">0</div><div class="stat-label">Retries</div></div>
@@ -191,27 +202,46 @@
     <div id="currentTask" class="current-task idle">Keine Aufgabe aktiv</div>
   </div>
 
-  <div class="grid-2">
-    <div class="card">
-      <div class="card-title">Aufgaben (tasks/todo.md)</div>
-      <textarea id="tasksEditor"></textarea>
-      <div class="gap mt">
-        <button class="btn-primary" onclick="saveTasks()">Speichern</button>
-        <button class="btn-ghost btn-sm" onclick="loadTasks()">Neu laden</button>
-      </div>
+  <!-- Modi -->
+  <div class="card">
+    <div class="card-title">Modus</div>
+    <div class="mode-bar" id="modeButtons"></div>
+  </div>
+
+  <!-- Projekte -->
+  <div class="card">
+    <div class="card-title" style="display:flex;justify-content:space-between">
+      <span>Projekte <span id="projectRoot" style="color:var(--muted);font-weight:400"></span></span>
+      <button class="btn-ghost btn-sm" onclick="loadProjects()">↺ Aktualisieren</button>
     </div>
-    <div class="card">
-      <div class="card-title">Schnell-Aufgabe hinzufügen</div>
-      <div class="form-group">
-        <label>Aufgabe</label>
-        <input type="text" id="quickTask" placeholder="Erstelle eine index.html mit Hello World">
-      </div>
-      <div class="form-group">
-        <label>Verzeichnis (optional)</label>
-        <input type="text" id="quickDir" placeholder="/Users/gesche/MeinProjekt">
-      </div>
+    <div class="projects-grid" id="projectsGrid">
+      <div style="color:var(--muted);font-size:12px">Lade Projekte…</div>
+    </div>
+
+    <!-- Aufgabe hinzufügen -->
+    <div class="card-title" style="margin-top:14px">Aufgabe hinzufügen</div>
+    <div class="task-add-row">
+      <input type="text" id="quickTask" placeholder="z.B. Erstelle eine Login-Seite mit CSS">
       <button class="btn-primary" onclick="addQuickTask()">+ Hinzufügen</button>
     </div>
+    <div id="selectedProjectHint" style="margin-top:6px;font-size:11px;color:var(--muted)">Kein Projekt gewählt — Aufgabe wird ohne Verzeichnis hinzugefügt</div>
+  </div>
+
+  <!-- Aufgaben-Queue -->
+  <div class="card">
+    <div class="card-title" style="display:flex;justify-content:space-between">
+      <span>Aufgaben-Queue</span>
+      <button class="btn-ghost btn-sm" onclick="loadTasks()">↺ Neu laden</button>
+    </div>
+    <div class="task-list" id="taskList">
+      <div style="color:var(--muted);font-size:12px">Keine Aufgaben</div>
+    </div>
+    <!-- Roher Editor (ausgeklappt) -->
+    <details style="margin-top:10px">
+      <summary style="font-size:10px;color:var(--muted);cursor:pointer;user-select:none">Roher Markdown-Editor</summary>
+      <textarea id="tasksEditor" style="width:100%;height:180px;margin-top:8px;background:var(--bg);border:1px solid var(--border);border-radius:7px;padding:9px;color:var(--text);font-family:inherit;font-size:11px;resize:vertical;outline:none"></textarea>
+      <div class="gap mt"><button class="btn-primary btn-sm" onclick="saveTasks()">Speichern</button></div>
+    </details>
   </div>
 </div>
 
@@ -225,7 +255,6 @@
 
 <!-- ── Tab: Passwörter ────────────────────────────────────────────────────── -->
 <div class="panel" id="tab-passwords">
-
   <div class="alert-banner hidden" id="clipboardAlert">
     <div class="alert-text" id="clipboardAlertText">Passwort im Clipboard erkannt</div>
     <div class="alert-actions">
@@ -233,8 +262,7 @@
       <button class="btn-sm btn-ghost" onclick="dismissClipboardAlert()">Ignorieren</button>
     </div>
   </div>
-
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
     <div class="gap">
       <span class="chip green" id="pwCountOk">0 OK</span>
       <span class="chip red" id="pwCountWrong">0 Falsch</span>
@@ -242,23 +270,10 @@
     </div>
     <button class="btn-primary" onclick="openAddPassword()">+ Passwort hinzufügen</button>
   </div>
-
   <div class="card">
-    <div id="pwAlertList"></div>
     <table class="pw-table">
-      <thead>
-        <tr>
-          <th>Website</th>
-          <th>Benutzername</th>
-          <th>Passwort</th>
-          <th>Status</th>
-          <th>Quelle</th>
-          <th>Aktionen</th>
-        </tr>
-      </thead>
-      <tbody id="pwTableBody">
-        <tr><td colspan="6" style="text-align:center;color:var(--muted);padding:30px">Noch keine Passwörter gespeichert</td></tr>
-      </tbody>
+      <thead><tr><th>Website</th><th>Benutzername</th><th>Passwort</th><th>Status</th><th>Aktionen</th></tr></thead>
+      <tbody id="pwTableBody"><tr><td colspan="5" style="text-align:center;color:var(--muted);padding:24px">Noch keine Passwörter</td></tr></tbody>
     </table>
   </div>
 </div>
@@ -266,100 +281,55 @@
 <!-- ── Tab: Einstellungen ─────────────────────────────────────────────────── -->
 <div class="panel" id="tab-settings">
   <div class="grid-2">
-
     <div class="card">
-      <div class="card-title">VS Code & Automation</div>
-      <div id="togglesVSCode"></div>
-      <div class="form-group mt">
+      <div class="card-title">Projekt-Ordner scannen</div>
+      <div class="form-group">
+        <label>Stammverzeichnis (Jarvis sucht hier nach Projekten)</label>
+        <input type="text" id="cfgProjectRoot" placeholder="/Users/…/Projects">
+      </div>
+      <div class="form-group">
         <label>Jarvis Projekt-Pfad</label>
         <input type="text" id="cfgProjectPath" placeholder="/Users/…/macbook-jarvis">
       </div>
     </div>
-
+    <div class="card">
+      <div class="card-title">VS Code & Automation</div>
+      <div id="togglesVSCode"></div>
+    </div>
     <div class="card">
       <div class="card-title">Passwort-Manager</div>
       <div id="togglesPassword"></div>
       <div class="form-group mt">
-        <label>Master-Passwort (verschlüsselt lokal)</label>
-        <input type="password" id="cfgMasterKey" placeholder="Leer = Machine-ID als Schlüssel">
+        <label>Master-Passwort</label>
+        <input type="password" id="cfgMasterKey" placeholder="Leer = Machine-ID">
       </div>
     </div>
-
     <div class="card">
-      <div class="card-title">Jarvis Task-Loop</div>
+      <div class="card-title">Task-Loop</div>
       <div class="form-group">
         <label>Anthropic API Key (optional)</label>
-        <input type="password" id="cfgApiKey" placeholder="sk-ant-… (leer = lokale Bewertung)">
+        <input type="password" id="cfgApiKey" placeholder="sk-ant-…">
       </div>
       <div class="form-group">
         <label>Max. Retries</label>
         <input type="number" id="cfgMaxRetries" value="3" min="1" max="10">
       </div>
       <div class="form-group">
-        <label>Claude Code Timeout (Sekunden)</label>
+        <label>Timeout (Sekunden)</label>
         <input type="number" id="cfgTimeout" value="300" min="30">
       </div>
     </div>
-
-    <div class="card">
-      <div class="card-title">Daemon (Auto-Start)</div>
-      <p style="color:var(--muted);font-size:12px;margin-bottom:14px">
-        Jarvis als Hintergrund-Dienst installieren.<br>
-        Startet automatisch bei jedem Login.
-      </p>
-      <div class="gap">
-        <code style="background:var(--bg);padding:8px 12px;border-radius:6px;font-size:11px;flex:1;border:1px solid var(--border)">bash daemon_install.sh install</code>
-      </div>
-      <div class="gap mt" style="font-size:11px;color:var(--muted)">
-        <code>uninstall</code> — entfernen &nbsp;|&nbsp; <code>status</code> — prüfen &nbsp;|&nbsp; <code>logs</code> — live logs
-      </div>
-
-      <div class="form-group mt">
-        <label>Cloudflare Tunnel URL (für Siri/Alexa)</label>
-        <input type="url" id="cfgTunnelUrl" placeholder="https://xyz.trycloudflare.com">
-        <div style="font-size:11px;color:var(--muted);margin-top:5px">
-          Webhook: <code id="webhookUrl" style="color:var(--accent2)">–</code>
-        </div>
-      </div>
-    </div>
-
   </div>
-
-  <div style="margin-top:16px;display:flex;justify-content:flex-end">
+  <div style="margin-top:12px;display:flex;justify-content:flex-end">
     <button class="btn-primary" onclick="saveSettings()">Einstellungen speichern</button>
   </div>
 </div>
 
-<!-- ── Modal: Passwort hinzufügen ─────────────────────────────────────────── -->
-<div class="modal-overlay" id="addPwModal">
-  <div class="modal">
-    <h2>🔐 Passwort hinzufügen</h2>
-    <div class="form-group">
-      <label>Website / App</label>
-      <input type="text" id="pwSite" placeholder="google.com">
-    </div>
-    <div class="form-group">
-      <label>Benutzername / E-Mail</label>
-      <input type="text" id="pwUsername" placeholder="mein@email.de">
-    </div>
-    <div class="form-group">
-      <label>Passwort</label>
-      <input type="password" id="pwPassword" placeholder="••••••••">
-    </div>
-    <div class="modal-footer">
-      <button class="btn-ghost" onclick="closeModal('addPwModal')">Abbrechen</button>
-      <button class="btn-primary" onclick="submitAddPassword()">Speichern</button>
-    </div>
-  </div>
-</div>
-
-<!-- ── Toast ───────────────────────────────────────────────────────────── -->
+<!-- ── Toast & Confirm ────────────────────────────────────────────────────── -->
 <div id="toast"></div>
-
-<!-- ── Confirm Modal ──────────────────────────────────────────────────────── -->
 <div id="confirmModal">
   <div id="confirmBox">
-    <div id="confirmMsg">Wirklich löschen?</div>
+    <div id="confirmMsg"></div>
     <div id="confirmActions">
       <button class="btn-ghost" onclick="resolveConfirm(false)">Abbrechen</button>
       <button class="btn-danger" onclick="resolveConfirm(true)">Löschen</button>
@@ -367,14 +337,23 @@
   </div>
 </div>
 
-<!-- ── Modal: Passwort anzeigen ──────────────────────────────────────────── -->
+<!-- ── Passwort Modals ─────────────────────────────────────────────────────── -->
+<div class="modal-overlay" id="addPwModal">
+  <div class="modal">
+    <h2>🔐 Passwort hinzufügen</h2>
+    <div class="form-group"><label>Website</label><input type="text" id="pwSite" placeholder="google.com"></div>
+    <div class="form-group"><label>Benutzername</label><input type="text" id="pwUsername" placeholder="mein@email.de"></div>
+    <div class="form-group"><label>Passwort</label><input type="password" id="pwPassword"></div>
+    <div class="modal-footer">
+      <button class="btn-ghost" onclick="closeModal('addPwModal')">Abbrechen</button>
+      <button class="btn-primary" onclick="submitAddPassword()">Speichern</button>
+    </div>
+  </div>
+</div>
 <div class="modal-overlay" id="revealPwModal">
   <div class="modal">
     <h2>🔓 Passwort</h2>
-    <div class="form-group">
-      <label>Passwort</label>
-      <input type="text" id="revealPwField" readonly>
-    </div>
+    <div class="form-group"><label>Passwort</label><input type="text" id="revealPwField" readonly></div>
     <div class="modal-footer">
       <button class="btn-ghost" onclick="closeModal('revealPwModal')">Schließen</button>
       <button class="btn-primary" onclick="copyRevealedPassword()">Kopieren</button>
@@ -383,17 +362,16 @@
 </div>
 
 <script>
-// ── Toast (ersetzt alert()) ────────────────────────────────────────────────
+// ── Utils ─────────────────────────────────────────────────────────────────
 let _toastTimer;
-function toast(msg, type='success') {
+function toast(msg, type = 'success') {
   const el = document.getElementById('toast');
   el.textContent = msg;
   el.className = 'show ' + type;
   clearTimeout(_toastTimer);
-  _toastTimer = setTimeout(() => el.className = '', 3000);
+  _toastTimer = setTimeout(() => el.className = '', 2800);
 }
 
-// ── Confirm (ersetzt confirm()) ────────────────────────────────────────────
 let _confirmResolve;
 function showConfirm(msg) {
   document.getElementById('confirmMsg').textContent = msg;
@@ -405,26 +383,24 @@ function resolveConfirm(ok) {
   if (_confirmResolve) { _confirmResolve(ok); _confirmResolve = null; }
 }
 
-// ── State ──────────────────────────────────────────────────────────────────
-let currentMode = '';
-let settings = {};
-let passwords = [];
-
 // ── Tabs ──────────────────────────────────────────────────────────────────
-function showTab(name) {
+function showTab(name, el) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-  event.target.classList.add('active');
+  el.classList.add('active');
   document.getElementById('tab-' + name).classList.add('active');
   if (name === 'passwords') loadPasswords();
   if (name === 'settings') loadSettings();
 }
 
-// ── Status Polling ─────────────────────────────────────────────────────────
+// ── State ─────────────────────────────────────────────────────────────────
+let currentMode = '';
+let selectedProject = null;
+
+// ── Polling (1s) ──────────────────────────────────────────────────────────
 async function fetchStatus() {
   try {
-    const r = await fetch('/api/status');
-    const d = await r.json();
+    const d = await fetch('/api/status').then(r => r.json());
 
     const badge = document.getElementById('statusBadge');
     badge.className = d.running ? 'status-badge running' : 'status-badge';
@@ -439,24 +415,25 @@ async function fetchStatus() {
       ct.textContent = 'Keine Aufgabe aktiv';
     }
 
-    document.getElementById('statDone').textContent = d.stats.done;
+    document.getElementById('statDone').textContent    = d.stats.done;
     document.getElementById('statRetried').textContent = d.stats.retried;
-    document.getElementById('statFailed').textContent = d.stats.failed;
+    document.getElementById('statFailed').textContent  = d.stats.failed;
 
-    document.getElementById('dialogChip').textContent = d.vscode_dialogs_confirmed + ' Dialoge bestätigt';
-    if (d.vscode_dialogs_confirmed > 0) {
-      document.getElementById('dialogChip').className = 'chip green';
+    const dc = document.getElementById('dialogChip');
+    dc.textContent = d.vscode_dialogs_confirmed + ' Dialoge bestätigt';
+    if (d.vscode_dialogs_confirmed > 0) dc.className = 'chip green';
+
+    // Modus-Buttons aktualisieren (nur wenn sich etwas geändert hat)
+    if (d.current_mode !== currentMode) {
+      currentMode = d.current_mode;
+      document.querySelectorAll('.btn-mode[data-mode]').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.mode === currentMode);
+      });
     }
 
-    currentMode = d.current_mode;
-    document.querySelectorAll('.btn-mode[data-mode]').forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.mode === currentMode);
-    });
-
-    // Log
-    const logList = document.getElementById('logList');
+    // Log (nur wenn Tab aktiv)
     if (document.getElementById('tab-log').classList.contains('active')) {
-      logList.innerHTML = d.log.map(e =>
+      document.getElementById('logList').innerHTML = d.log.map(e =>
         `<div class="log-entry ${e.level}"><span class="log-time">${e.time}</span><span class="log-msg">${e.msg}</span></div>`
       ).join('');
     }
@@ -465,254 +442,253 @@ async function fetchStatus() {
     if (d.last_clipboard_capture) {
       const c = d.last_clipboard_capture;
       document.getElementById('clipboardAlertText').textContent =
-        `Passwort im Clipboard erkannt — ${c.site} — ${c.password_preview}`;
+        `Passwort erkannt — ${c.site} — ${c.password_preview}`;
       document.getElementById('clipboardAlert').classList.remove('hidden');
-      document.getElementById('tab-passwords').querySelector('.panel') // Ensure visible if on tab
     }
 
-    // Password alerts badge
     const alertCount = d.password_alerts.length;
-    const badge2 = document.getElementById('pwAlertBadge');
-    badge2.style.display = alertCount > 0 ? 'inline' : 'none';
+    document.getElementById('pwAlertBadge').style.display = alertCount > 0 ? 'inline' : 'none';
 
   } catch (e) {}
 }
 
-// ── Controls ───────────────────────────────────────────────────────────────
+// ── Controls ──────────────────────────────────────────────────────────────
 async function startJarvis() {
   await fetch('/api/start', {method:'POST'});
   toast('▶ Jarvis gestartet');
 }
 async function stopJarvis() {
   await fetch('/api/stop', {method:'POST'});
-  toast('⏹ Jarvis gestoppt', 'error');
+  toast('⏹ Gestoppt', 'error');
 }
-async function setMode(mode) {
-  const r = await fetch('/api/mode', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({mode})});
-  const d = await r.json();
-  toast(d.ok ? '✓ Modus aktiviert' : '✗ Modus fehlgeschlagen', d.ok ? 'success' : 'error');
-}
-async function openJarvisVSCode() {
+async function openVSCode() {
   await fetch('/api/vscode/open-jarvis', {method:'POST'});
 }
 
-// ── Modes ──────────────────────────────────────────────────────────────────
+// ── Modi ──────────────────────────────────────────────────────────────────
 async function loadModes() {
-  const r = await fetch('/api/modes');
-  const modes = await r.json();
+  const modes = await fetch('/api/modes').then(r => r.json());
   const container = document.getElementById('modeButtons');
   container.innerHTML = Object.entries(modes).map(([key, m]) =>
-    `<button class="btn-mode" data-mode="${key}" onclick="setMode('${key}')">${m.icon} ${m.name}</button>`
+    `<button class="btn-mode${key === currentMode ? ' active' : ''}" data-mode="${key}" onclick="setMode('${key}',this)">${m.icon} ${m.name}</button>`
   ).join('');
 }
 
-// ── Tasks ──────────────────────────────────────────────────────────────────
-async function loadTasks() {
-  const r = await fetch('/api/tasks');
-  const d = await r.json();
-  document.getElementById('tasksEditor').value = d.content;
-}
-async function saveTasks() {
-  await fetch('/api/tasks', {method:'POST', headers:{'Content-Type':'application/json'},
-    body: JSON.stringify({content: document.getElementById('tasksEditor').value})});
-}
-async function addQuickTask() {
-  const task = document.getElementById('quickTask').value.trim();
-  const dir = document.getElementById('quickDir').value.trim();
-  if (!task) return;
-  const r = await fetch('/api/tasks');
-  const d = await r.json();
-  let content = d.content.trim();
-  const line = dir ? `- [ ] ${task} | Verzeichnis: ${dir}` : `- [ ] ${task}`;
-  content += '\n' + line;
-  await fetch('/api/tasks', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({content})});
-  document.getElementById('tasksEditor').value = content;
-  document.getElementById('quickTask').value = '';
+async function setMode(mode, btn) {
+  // Sofortige visuelle Reaktion
+  document.querySelectorAll('.btn-mode').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  currentMode = mode;
+
+  const d = await fetch('/api/mode', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({mode})
+  }).then(r => r.json());
+
+  toast(d.ok ? '✓ Modus aktiviert' : '✗ Fehler', d.ok ? 'success' : 'error');
 }
 
-// ── Passwords ──────────────────────────────────────────────────────────────
-async function loadPasswords() {
-  const r = await fetch('/api/passwords');
-  const d = await r.json();
-  passwords = d.entries;
-  document.getElementById('pwCountOk').textContent = d.count.ok + ' OK';
-  document.getElementById('pwCountWrong').textContent = d.count.wrong + ' Falsch';
-  document.getElementById('pwCountTotal').textContent = d.count.total + ' Gesamt';
-
-  const tbody = document.getElementById('pwTableBody');
-  if (!passwords.length) {
-    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:30px">Noch keine Passwörter gespeichert</td></tr>';
+// ── Projekte ──────────────────────────────────────────────────────────────
+async function loadProjects() {
+  const d = await fetch('/api/projects').then(r => r.json());
+  document.getElementById('projectRoot').textContent = '— ' + d.root;
+  const grid = document.getElementById('projectsGrid');
+  if (!d.projects.length) {
+    grid.innerHTML = '<div style="color:var(--muted);font-size:12px">Keine Projekte gefunden — Stammverzeichnis in Einstellungen setzen</div>';
     return;
   }
+  grid.innerHTML = d.projects.map(p => `
+    <div class="project-card" onclick="selectProject(this,'${p.path}','${p.name}')" data-path="${p.path}">
+      <div class="project-name">📁 ${p.name}</div>
+      <div class="project-path">${p.path}</div>
+    </div>
+  `).join('');
+}
 
+function selectProject(el, path, name) {
+  document.querySelectorAll('.project-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedProject = {path, name};
+  document.getElementById('selectedProjectHint').textContent = `Projekt: ${name}  →  ${path}`;
+  document.getElementById('selectedProjectHint').style.color = 'var(--accent2)';
+}
+
+// ── Tasks ─────────────────────────────────────────────────────────────────
+async function loadTasks() {
+  const d = await fetch('/api/tasks').then(r => r.json());
+  document.getElementById('tasksEditor').value = d.content;
+  renderTaskList(d.content);
+}
+
+function renderTaskList(content) {
+  const lines = content.split('\n').filter(l => l.match(/^- \[[ x!]\]/));
+  const list = document.getElementById('taskList');
+  if (!lines.length) {
+    list.innerHTML = '<div style="color:var(--muted);font-size:12px">Keine Aufgaben in der Queue</div>';
+    return;
+  }
+  list.innerHTML = lines.map(line => {
+    const done = line.startsWith('- [x]') || line.startsWith('- [!]');
+    const active = line.startsWith('- [ ]');
+    const text = line.replace(/^- \[[ x!]\] /, '');
+    const parts = text.split(' | Verzeichnis: ');
+    const taskText = parts[0];
+    const dir = parts[1] ? parts[1].split('/').pop() : '';
+    const icon = line.startsWith('- [x]') ? '✓' : line.startsWith('- [!]') ? '✗' : '○';
+    return `<div class="task-item ${done ? 'done' : ''}">
+      <span style="color:${line.startsWith('- [x]') ? 'var(--green)' : line.startsWith('- [!]') ? 'var(--red)' : 'var(--muted)'}">${icon}</span>
+      <span style="flex:1">${taskText}</span>
+      ${dir ? `<span class="task-badge proj">${dir}</span>` : ''}
+    </div>`;
+  }).join('');
+}
+
+async function saveTasks() {
+  const content = document.getElementById('tasksEditor').value;
+  await fetch('/api/tasks', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({content})});
+  renderTaskList(content);
+  toast('✓ Gespeichert');
+}
+
+async function addQuickTask() {
+  const task = document.getElementById('quickTask').value.trim();
+  if (!task) { toast('Aufgabe eingeben', 'error'); return; }
+
+  const d = await fetch('/api/tasks').then(r => r.json());
+  let content = d.content.trimEnd();
+  const line = selectedProject
+    ? `- [ ] ${task} | Verzeichnis: ${selectedProject.path}`
+    : `- [ ] ${task}`;
+  content += '\n' + line;
+
+  await fetch('/api/tasks', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({content})});
+  document.getElementById('quickTask').value = '';
+  document.getElementById('tasksEditor').value = content;
+  renderTaskList(content);
+  toast(`✓ Aufgabe hinzugefügt${selectedProject ? ' → ' + selectedProject.name : ''}`);
+}
+
+// ── Passwords ─────────────────────────────────────────────────────────────
+let passwords = [];
+async function loadPasswords() {
+  const d = await fetch('/api/passwords').then(r => r.json());
+  passwords = d.entries;
+  document.getElementById('pwCountOk').textContent    = d.count.ok + ' OK';
+  document.getElementById('pwCountWrong').textContent = d.count.wrong + ' Falsch';
+  document.getElementById('pwCountTotal').textContent = d.count.total + ' Gesamt';
+  const tbody = document.getElementById('pwTableBody');
+  if (!passwords.length) {
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:24px">Noch keine Passwörter</td></tr>';
+    return;
+  }
   tbody.innerHTML = passwords.map(e => `
     <tr>
       <td><strong>${e.site}</strong></td>
       <td>${e.username || '—'}</td>
       <td><code style="color:var(--muted)">${e.password_masked}</code></td>
-      <td><span class="pw-status ${e.status}">${statusLabel(e.status)}</span></td>
-      <td style="color:var(--muted);font-size:11px">${e.source}</td>
-      <td>
-        <div class="gap">
-          <button class="btn-sm btn-ghost" onclick="revealPassword('${e.id}')">Zeigen</button>
-          ${e.status === 'wrong' ? `<button class="btn-sm btn-green" onclick="markOk('${e.id}')">✓ OK</button>` : ''}
-          ${e.status !== 'wrong' ? `<button class="btn-sm btn-ghost" style="color:var(--yellow)" onclick="markWrong('${e.id}')">Falsch</button>` : ''}
-          <button class="btn-sm btn-danger" onclick="deletePassword('${e.id}')">✕</button>
-        </div>
-      </td>
-    </tr>
-  `).join('');
+      <td><span class="pw-status ${e.status}">${{ok:'✓ OK',wrong:'✗ Falsch',unknown:'?'}[e.status]||e.status}</span></td>
+      <td><div class="gap">
+        <button class="btn-sm btn-ghost" onclick="revealPassword('${e.id}')">Zeigen</button>
+        ${e.status !== 'ok' ? `<button class="btn-sm btn-green" onclick="markOk('${e.id}')">✓</button>` : ''}
+        ${e.status !== 'wrong' ? `<button class="btn-sm btn-ghost" style="color:var(--yellow)" onclick="markWrong('${e.id}')">✗</button>` : ''}
+        <button class="btn-sm btn-danger" onclick="deletePassword('${e.id}')">✕</button>
+      </div></td>
+    </tr>`).join('');
 }
-
-function statusLabel(s) {
-  return {ok:'✓ OK', wrong:'✗ Falsch', unknown:'?'}[s] || s;
-}
-
 function openAddPassword() { document.getElementById('addPwModal').classList.add('open'); }
 function closeModal(id) { document.getElementById(id).classList.remove('open'); }
-
 async function submitAddPassword() {
   const site = document.getElementById('pwSite').value.trim();
   const username = document.getElementById('pwUsername').value.trim();
   const password = document.getElementById('pwPassword').value;
   if (!site || !password) { toast('Site und Passwort erforderlich', 'error'); return; }
-  await fetch('/api/passwords', {method:'POST', headers:{'Content-Type':'application/json'},
-    body: JSON.stringify({site, username, password})});
+  await fetch('/api/passwords', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({site, username, password})});
   closeModal('addPwModal');
-  toast('🔐 Passwort gespeichert');
+  toast('🔐 Gespeichert');
   loadPasswords();
 }
-
 async function revealPassword(id) {
-  const r = await fetch(`/api/passwords/${id}/reveal`);
-  const d = await r.json();
-  if (d.ok) {
-    document.getElementById('revealPwField').value = d.password;
-    document.getElementById('revealPwModal').classList.add('open');
-  }
+  const d = await fetch(`/api/passwords/${id}/reveal`).then(r => r.json());
+  if (d.ok) { document.getElementById('revealPwField').value = d.password; document.getElementById('revealPwModal').classList.add('open'); }
 }
-
 function copyRevealedPassword() {
   const pw = document.getElementById('revealPwField').value;
-  try {
-    navigator.clipboard.writeText(pw);
-  } catch {
-    // WKWebView fallback
-    const el = document.getElementById('revealPwField');
-    el.select();
-    document.execCommand('copy');
-  }
+  try { navigator.clipboard.writeText(pw); } catch { document.getElementById('revealPwField').select(); document.execCommand('copy'); }
   closeModal('revealPwModal');
-  toast('📋 Passwort kopiert');
+  toast('📋 Kopiert');
 }
-
 async function deletePassword(id) {
-  const ok = await showConfirm('Passwort wirklich löschen?');
-  if (!ok) return;
+  if (!await showConfirm('Passwort wirklich löschen?')) return;
   await fetch(`/api/passwords/${id}`, {method:'DELETE'});
-  toast('Passwort gelöscht', 'error');
-  loadPasswords();
+  toast('Gelöscht', 'error'); loadPasswords();
 }
-
-async function markWrong(id) {
-  await fetch(`/api/passwords/${id}/status`, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({status:'wrong'})});
-  loadPasswords();
-}
-async function markOk(id) {
-  await fetch(`/api/passwords/${id}/status`, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({status:'ok'})});
-  loadPasswords();
-}
-
+async function markWrong(id) { await fetch(`/api/passwords/${id}/status`, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({status:'wrong'})}); loadPasswords(); }
+async function markOk(id) { await fetch(`/api/passwords/${id}/status`, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({status:'ok'})}); loadPasswords(); }
 async function saveClipboardPassword() {
-  const site = prompt('Für welche Website? (z.B. google.com)', '');
-  const username = prompt('Benutzername / E-Mail (optional)', '');
-  await fetch('/api/passwords/save-clipboard', {method:'POST', headers:{'Content-Type':'application/json'},
-    body: JSON.stringify({site: site || 'unbekannt', username: username || ''})});
+  const site = prompt('Website?', '') || 'unbekannt';
+  await fetch('/api/passwords/save-clipboard', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({site, username:''})});
   document.getElementById('clipboardAlert').classList.add('hidden');
   loadPasswords();
 }
-
 async function dismissClipboardAlert() {
-  await fetch('/api/passwords/save-clipboard', {method:'POST', headers:{'Content-Type':'application/json'},
-    body: JSON.stringify({site: '__dismiss__', username: ''})});
+  await fetch('/api/passwords/save-clipboard', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({site:'__dismiss__', username:''})});
   document.getElementById('clipboardAlert').classList.add('hidden');
 }
 
-// ── Settings ───────────────────────────────────────────────────────────────
+// ── Einstellungen ─────────────────────────────────────────────────────────
 const TOGGLES_VSCODE = [
-  {key:'auto_confirm_vscode', label:'VS Code Dialoge auto-bestätigen', desc:'Klickt Allow/Yes automatisch weg'},
-  {key:'single_vscode_window', label:'Nur ein VS Code Fenster', desc:'Schließt extra Fenster automatisch'},
-  {key:'enforce_claude_vscode', label:'Claude immer offen halten', desc:'Stellt sicher dass Claude im VS Code läuft'},
+  {key:'auto_confirm_vscode',   label:'VS Code Dialoge auto-bestätigen', desc:'Klickt Allow/Yes automatisch'},
+  {key:'single_vscode_window',  label:'Nur ein VS Code Fenster',         desc:'Schließt extra Fenster'},
+  {key:'enforce_claude_vscode', label:'VS Code pro Aufgabe öffnen',      desc:'Öffnet Projekt automatisch'},
 ];
 const TOGGLES_PW = [
-  {key:'password_manager_enabled', label:'Passwort-Manager aktiv', desc:'Überwacht Browser & Clipboard'},
-  {key:'password_clipboard_capture', label:'Clipboard überwachen', desc:'Erkennt kopierte Passwörter automatisch'},
+  {key:'password_manager_enabled',   label:'Passwort-Manager aktiv',   desc:'Browser & Clipboard überwachen'},
+  {key:'password_clipboard_capture', label:'Clipboard überwachen',      desc:'Erkennt kopierte Passwörter'},
 ];
-
+let settings = {};
 async function loadSettings() {
-  const r = await fetch('/api/config');
-  settings = await r.json();
-
-  function renderToggles(containerId, defs) {
-    document.getElementById(containerId).innerHTML = defs.map(t => `
+  settings = await fetch('/api/config').then(r => r.json());
+  function renderToggles(id, defs) {
+    document.getElementById(id).innerHTML = defs.map(t => `
       <div class="toggle-row">
-        <div>
-          <div class="toggle-label">${t.label}</div>
-          <div class="toggle-desc">${t.desc}</div>
-        </div>
-        <label class="toggle">
-          <input type="checkbox" id="toggle_${t.key}" ${settings[t.key] ? 'checked' : ''}>
-          <span class="toggle-slider"></span>
-        </label>
-      </div>
-    `).join('');
+        <div><div style="font-size:12px">${t.label}</div><div style="font-size:10px;color:var(--muted)">${t.desc}</div></div>
+        <label class="toggle"><input type="checkbox" id="toggle_${t.key}" ${settings[t.key] ? 'checked' : ''}><span class="toggle-slider"></span></label>
+      </div>`).join('');
   }
-
   renderToggles('togglesVSCode', TOGGLES_VSCODE);
   renderToggles('togglesPassword', TOGGLES_PW);
-
+  document.getElementById('cfgProjectRoot').value = settings.project_root || '';
   document.getElementById('cfgProjectPath').value = settings.jarvis_project_path || '';
-  document.getElementById('cfgMaxRetries').value = settings.max_retries || 3;
-  document.getElementById('cfgTimeout').value = settings.claude_code_timeout || 300;
-
-  const tunnelUrl = localStorage.getItem('tunnelUrl') || '';
-  document.getElementById('cfgTunnelUrl').value = tunnelUrl;
-  if (tunnelUrl) document.getElementById('webhookUrl').textContent = tunnelUrl + '/webhook/jarvis';
+  document.getElementById('cfgMaxRetries').value  = settings.max_retries || 3;
+  document.getElementById('cfgTimeout').value     = settings.claude_code_timeout || 300;
 }
-
 async function saveSettings() {
-  const allToggles = [...TOGGLES_VSCODE, ...TOGGLES_PW];
   const body = {};
-  allToggles.forEach(t => {
+  [...TOGGLES_VSCODE, ...TOGGLES_PW].forEach(t => {
     const el = document.getElementById('toggle_' + t.key);
     if (el) body[t.key] = el.checked;
   });
+  body.project_root        = document.getElementById('cfgProjectRoot').value;
   body.jarvis_project_path = document.getElementById('cfgProjectPath').value;
-  body.max_retries = parseInt(document.getElementById('cfgMaxRetries').value);
+  body.max_retries         = parseInt(document.getElementById('cfgMaxRetries').value);
   body.claude_code_timeout = parseInt(document.getElementById('cfgTimeout').value);
-
-  const apiKey = document.getElementById('cfgApiKey').value;
-  if (apiKey) body.anthropic_api_key = apiKey;
-
+  const apiKey    = document.getElementById('cfgApiKey').value;
   const masterKey = document.getElementById('cfgMasterKey').value;
+  if (apiKey)    body.anthropic_api_key  = apiKey;
   if (masterKey) body.password_master_key = masterKey;
-
   await fetch('/api/config', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body)});
-
-  const tunnelUrl = document.getElementById('cfgTunnelUrl').value.trim();
-  if (tunnelUrl) {
-    localStorage.setItem('tunnelUrl', tunnelUrl);
-    document.getElementById('webhookUrl').textContent = tunnelUrl + '/webhook/jarvis';
-  }
-
-  toast('✓ Einstellungen gespeichert');
+  toast('✓ Gespeichert');
+  // Projekte neu laden falls Stammverzeichnis geändert
+  if (body.project_root) { setTimeout(loadProjects, 300); }
 }
 
-// ── Init ───────────────────────────────────────────────────────────────────
+// ── Init ──────────────────────────────────────────────────────────────────
 loadModes();
 loadTasks();
+loadProjects();
 fetchStatus();
-setInterval(fetchStatus, 2500);
+setInterval(fetchStatus, 1000);
 </script>
 </body>
 </html>

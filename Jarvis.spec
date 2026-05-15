@@ -73,8 +73,8 @@ app = BUNDLE(
     info_plist={
         'CFBundleName': 'Jarvis',
         'CFBundleDisplayName': 'MacBook Jarvis',
-        'CFBundleVersion': '1.0.2',
-        'CFBundleShortVersionString': '1.0.2',
+        'CFBundleVersion': '1.0.3',
+        'CFBundleShortVersionString': '1.0.3',
         'NSHighResolutionCapable': True,
         'LSUIElement': True,          # Kein Dock-Icon — nur Menüleiste
         'NSRequiresAquaSystemAppearance': False,

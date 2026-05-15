@@ -55,6 +55,7 @@ DEFAULT_CONFIG = {
     "password_manager_enabled": True,
     "password_clipboard_capture": True,
     "password_master_key": "",
+    "project_root": str(Path.home() / "Downloads"),
 }
 
 if not CONFIG_FILE.exists():
@@ -211,6 +212,17 @@ def run_task_loop():
         log_event(f"Aufgabe: {task['text']}")
         feedback_result = {}
         success = False
+
+        # Projekt in VS Code öffnen bevor Claude startet
+        if config.get("enforce_claude_vscode", True):
+            try:
+                computer.open_jarvis_in_vscode(
+                    task["directory"],
+                    config.get("single_vscode_window", True)
+                )
+                time.sleep(2)
+            except Exception:
+                pass
 
         for attempt in range(1, config["max_retries"] + 1):
             prompt = task["text"] if attempt == 1 else feedback_result.get("verbesserungs_prompt", task["text"])

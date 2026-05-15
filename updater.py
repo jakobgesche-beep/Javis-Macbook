@@ -9,7 +9,7 @@ import time
 from pathlib import Path
 
 GITHUB_API = "https://api.github.com/repos/jakobgesche-beep/Javis-Macbook/releases/latest"
-CURRENT_VERSION = "1.0.2"
+CURRENT_VERSION = "1.0.3"
 APP_BUNDLE = Path("/Applications/Jarvis.app")
 
 
