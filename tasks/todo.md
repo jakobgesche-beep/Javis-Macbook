@@ -3,4 +3,4 @@
 <!-- Jarvis arbeitet diese Liste von oben nach unten ab. -->
 <!-- Format: - [ ] Aufgabe | Verzeichnis: /pfad/zum/projekt -->
 
-- [x] Erstelle eine hello.py Datei die "Hello from Jarvis!" ausgibt | Verzeichnis: /tmp/jarvis-test
+- [x] Erstelle eine README.md mit einer kurzen Beschreibung des MacBook Jarvis Projekts auf Deutsch | Verzeichnis: /Users/gesche/Downloads/macbook-jarvis
