@@ -8,3 +8,10 @@ data/
 build/
 dist/
 *.spec.bak
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example
