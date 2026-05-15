@@ -127,6 +127,19 @@
     .modal h2 { font-size: 15px; margin-bottom: 18px; }
     .modal-footer { display: flex; justify-content: flex-end; gap: 8px; margin-top: 18px; }
 
+    /* Toast */
+    #toast { position:fixed; bottom:24px; right:24px; background:#1e1e2e; border:1px solid var(--border); border-radius:10px; padding:12px 18px; font-size:13px; z-index:200; opacity:0; transform:translateY(8px); transition:all .2s; pointer-events:none; }
+    #toast.show { opacity:1; transform:translateY(0); }
+    #toast.success { border-color:var(--green); color:var(--green); }
+    #toast.error { border-color:var(--red); color:var(--red); }
+
+    /* Confirm modal */
+    #confirmModal { display:none; position:fixed; inset:0; background:rgba(0,0,0,.7); z-index:300; align-items:center; justify-content:center; }
+    #confirmModal.open { display:flex; }
+    #confirmBox { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:24px; width:340px; }
+    #confirmMsg { margin-bottom:18px; font-size:14px; }
+    #confirmActions { display:flex; justify-content:flex-end; gap:10px; }
+
     /* Info chip */
     .chip { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 999px; font-size: 11px; border: 1px solid var(--border); color: var(--muted); }
     .chip.green { border-color: rgba(16,185,129,.4); color: var(--green); background: rgba(16,185,129,.08); }
@@ -340,6 +353,20 @@
   </div>
 </div>
 
+<!-- ── Toast ───────────────────────────────────────────────────────────── -->
+<div id="toast"></div>
+
+<!-- ── Confirm Modal ──────────────────────────────────────────────────────── -->
+<div id="confirmModal">
+  <div id="confirmBox">
+    <div id="confirmMsg">Wirklich löschen?</div>
+    <div id="confirmActions">
+      <button class="btn-ghost" onclick="resolveConfirm(false)">Abbrechen</button>
+      <button class="btn-danger" onclick="resolveConfirm(true)">Löschen</button>
+    </div>
+  </div>
+</div>
+
 <!-- ── Modal: Passwort anzeigen ──────────────────────────────────────────── -->
 <div class="modal-overlay" id="revealPwModal">
   <div class="modal">
@@ -356,6 +383,28 @@
 </div>
 
 <script>
+// ── Toast (ersetzt alert()) ────────────────────────────────────────────────
+let _toastTimer;
+function toast(msg, type='success') {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = 'show ' + type;
+  clearTimeout(_toastTimer);
+  _toastTimer = setTimeout(() => el.className = '', 3000);
+}
+
+// ── Confirm (ersetzt confirm()) ────────────────────────────────────────────
+let _confirmResolve;
+function showConfirm(msg) {
+  document.getElementById('confirmMsg').textContent = msg;
+  document.getElementById('confirmModal').classList.add('open');
+  return new Promise(r => _confirmResolve = r);
+}
+function resolveConfirm(ok) {
+  document.getElementById('confirmModal').classList.remove('open');
+  if (_confirmResolve) { _confirmResolve(ok); _confirmResolve = null; }
+}
+
 // ── State ──────────────────────────────────────────────────────────────────
 let currentMode = '';
 let settings = {};
@@ -430,10 +479,18 @@ async function fetchStatus() {
 }
 
 // ── Controls ───────────────────────────────────────────────────────────────
-async function startJarvis() { await fetch('/api/start', {method:'POST'}); }
-async function stopJarvis() { await fetch('/api/stop', {method:'POST'}); }
+async function startJarvis() {
+  await fetch('/api/start', {method:'POST'});
+  toast('▶ Jarvis gestartet');
+}
+async function stopJarvis() {
+  await fetch('/api/stop', {method:'POST'});
+  toast('⏹ Jarvis gestoppt', 'error');
+}
 async function setMode(mode) {
-  await fetch('/api/mode', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({mode})});
+  const r = await fetch('/api/mode', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({mode})});
+  const d = await r.json();
+  toast(d.ok ? '✓ Modus aktiviert' : '✗ Modus fehlgeschlagen', d.ok ? 'success' : 'error');
 }
 async function openJarvisVSCode() {
   await fetch('/api/vscode/open-jarvis', {method:'POST'});
@@ -518,10 +575,11 @@ async function submitAddPassword() {
   const site = document.getElementById('pwSite').value.trim();
   const username = document.getElementById('pwUsername').value.trim();
   const password = document.getElementById('pwPassword').value;
-  if (!site || !password) return alert('Site und Passwort erforderlich');
+  if (!site || !password) { toast('Site und Passwort erforderlich', 'error'); return; }
   await fetch('/api/passwords', {method:'POST', headers:{'Content-Type':'application/json'},
     body: JSON.stringify({site, username, password})});
   closeModal('addPwModal');
+  toast('🔐 Passwort gespeichert');
   loadPasswords();
 }
 
@@ -536,13 +594,23 @@ async function revealPassword(id) {
 
 function copyRevealedPassword() {
   const pw = document.getElementById('revealPwField').value;
-  navigator.clipboard.writeText(pw);
+  try {
+    navigator.clipboard.writeText(pw);
+  } catch {
+    // WKWebView fallback
+    const el = document.getElementById('revealPwField');
+    el.select();
+    document.execCommand('copy');
+  }
   closeModal('revealPwModal');
+  toast('📋 Passwort kopiert');
 }
 
 async function deletePassword(id) {
-  if (!confirm('Passwort wirklich löschen?')) return;
+  const ok = await showConfirm('Passwort wirklich löschen?');
+  if (!ok) return;
   await fetch(`/api/passwords/${id}`, {method:'DELETE'});
+  toast('Passwort gelöscht', 'error');
   loadPasswords();
 }
 
@@ -637,7 +705,7 @@ async function saveSettings() {
     document.getElementById('webhookUrl').textContent = tunnelUrl + '/webhook/jarvis';
   }
 
-  alert('Einstellungen gespeichert!');
+  toast('✓ Einstellungen gespeichert');
 }
 
 // ── Init ───────────────────────────────────────────────────────────────────

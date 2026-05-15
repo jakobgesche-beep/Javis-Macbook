@@ -20,7 +20,7 @@ hiddenimports = [
     'requests', 'urllib3',
     'anthropic',
     'password_vault', 'evaluator', 'computer',
-    'dashboard_app', 'menubar', 'feedback', 'native_window',
+    'dashboard_app', 'menubar', 'feedback', 'native_window', 'updater',
     'AppKit', 'Foundation', 'objc', 'WebKit',
 ]
 
@@ -73,8 +73,8 @@ app = BUNDLE(
     info_plist={
         'CFBundleName': 'Jarvis',
         'CFBundleDisplayName': 'MacBook Jarvis',
-        'CFBundleVersion': '1.0.0',
-        'CFBundleShortVersionString': '1.0',
+        'CFBundleVersion': '1.0.2',
+        'CFBundleShortVersionString': '1.0.2',
         'NSHighResolutionCapable': True,
         'LSUIElement': True,          # Kein Dock-Icon — nur Menüleiste
         'NSRequiresAquaSystemAppearance': False,
