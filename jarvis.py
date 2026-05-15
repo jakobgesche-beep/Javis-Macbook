@@ -316,7 +316,26 @@ if __name__ == "__main__":
     for t in threads:
         t.start()
 
+    # Flask im Hintergrund-Thread — Menüleiste braucht den Main-Thread
     from dashboard import create_app
-    app = create_app(state, state_lock)
+    flask_app = create_app(state, state_lock)
     config = load_config()
-    app.run(host="0.0.0.0", port=config["dashboard_port"], debug=False, use_reloader=False)
+
+    flask_thread = threading.Thread(
+        target=lambda: flask_app.run(
+            host="0.0.0.0", port=config["dashboard_port"],
+            debug=False, use_reloader=False
+        ),
+        daemon=True,
+        name="flask"
+    )
+    flask_thread.start()
+
+    # Menüleiste im Main-Thread (macOS Anforderung)
+    try:
+        from menubar import run_menubar
+        run_menubar()
+    except Exception as e:
+        # Fallback: ohne Menüleiste weiterlaufen
+        logging.warning(f"Menüleiste nicht verfügbar: {e}")
+        flask_thread.join()
