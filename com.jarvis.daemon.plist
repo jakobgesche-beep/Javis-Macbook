@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.jarvis.daemon</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>VENV_PYTHON_PLACEHOLDER</string>
+        <string>PROJECT_PATH_PLACEHOLDER/jarvis.py</string>
+    </array>
+
+    <key>WorkingDirectory</key>
+    <string>PROJECT_PATH_PLACEHOLDER</string>
+
+    <key>RunAtLoad</key>
+    <true/>
+
+    <key>KeepAlive</key>
+    <true/>
+
+    <key>StandardOutPath</key>
+    <string>PROJECT_PATH_PLACEHOLDER/logs/daemon.log</string>
+
+    <key>StandardErrorPath</key>
+    <string>PROJECT_PATH_PLACEHOLDER/logs/daemon.error.log</string>
+
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/homebrew/bin</string>
+    </dict>
+
+    <key>ThrottleInterval</key>
+    <integer>10</integer>
+</dict>
+</plist>

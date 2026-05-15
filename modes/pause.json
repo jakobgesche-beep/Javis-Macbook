@@ -1,0 +1,9 @@
+{
+  "name": "Pause",
+  "icon": "⏸️",
+  "description": "Alles speichern und Claude Code stoppen",
+  "actions": [
+    {"type": "save_tabs"},
+    {"type": "minimize_all"}
+  ]
+}

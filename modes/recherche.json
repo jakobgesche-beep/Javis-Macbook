@@ -1,0 +1,9 @@
+{
+  "name": "Recherche",
+  "icon": "🔍",
+  "description": "Browser öffnen, Notion öffnen",
+  "actions": [
+    {"type": "open_app", "app": "Google Chrome"},
+    {"type": "open_url", "url": "https://notion.so"}
+  ]
+}

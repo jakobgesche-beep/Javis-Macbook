@@ -1,0 +1,11 @@
+{
+  "name": "Programmieren",
+  "icon": "💻",
+  "description": "Alle Tabs schließen, VS Code + Terminal öffnen",
+  "actions": [
+    {"type": "save_tabs"},
+    {"type": "close_tabs"},
+    {"type": "open_app", "app": "Visual Studio Code"},
+    {"type": "open_app", "app": "Terminal"}
+  ]
+}

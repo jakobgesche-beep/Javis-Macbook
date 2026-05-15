@@ -1,0 +1,11 @@
+{
+  "anthropic_api_key": "sk-ant-DEIN-KEY-HIER",
+  "max_retries": 3,
+  "claude_code_timeout": 300,
+  "dashboard_port": 8080,
+  "webhook_port": 5000,
+  "tasks_file": "tasks/todo.md",
+  "log_file": "logs/jarvis.log",
+  "current_mode": "pause",
+  "auto_start": false
+}

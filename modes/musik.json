@@ -1,0 +1,9 @@
+{
+  "name": "Musik",
+  "icon": "🎵",
+  "description": "Alle Apps minimieren, Spotify öffnen",
+  "actions": [
+    {"type": "minimize_all"},
+    {"type": "open_app", "app": "Spotify"}
+  ]
+}
