@@ -1,7 +1,8 @@
 import threading
-import webbrowser
+import time
 import requests
 import rumps
+import native_window
 
 API = "http://127.0.0.1:8080"
 
@@ -30,16 +31,21 @@ class JarvisMenuBar(rumps.App):
         self._build_menu()
         threading.Thread(target=self._poll, daemon=True).start()
 
+        # Fenster automatisch öffnen sobald Flask bereit ist (rumps.Timer = Main-Thread)
+        self._open_timer = rumps.Timer(self._auto_open, 2.5)
+        self._open_timer.start()
+
+    def _auto_open(self, timer):
+        native_window.open_window()
+        timer.stop()
+
     def _build_menu(self):
-        # Status-Zeile (nicht klickbar)
         self._status_item = rumps.MenuItem("Jarvis — Gestoppt")
         self._status_item.set_callback(None)
 
-        # Start / Stop
         self._start_item = rumps.MenuItem("▶  Starten",  callback=self._start)
         self._stop_item  = rumps.MenuItem("⏹  Stoppen",  callback=self._stop)
 
-        # Modi-Untermenü
         mode_menu = rumps.MenuItem("⚡  Modus wechseln")
         for key, (icon, label) in MODES.items():
             mode_menu.add(rumps.MenuItem(
@@ -56,21 +62,19 @@ class JarvisMenuBar(rumps.App):
             None,
             mode_menu,
             None,
-            rumps.MenuItem("🌐  Dashboard öffnen",   callback=lambda _: webbrowser.open("http://127.0.0.1:8080")),
-            rumps.MenuItem("📂  VS Code öffnen",     callback=lambda _: api_call("/api/vscode/open-jarvis", "POST")),
-            rumps.MenuItem("🔐  Passwörter",          callback=lambda _: webbrowser.open("http://127.0.0.1:8080")),
+            rumps.MenuItem("🖥  Dashboard öffnen",  callback=lambda _: native_window.open_window()),
+            rumps.MenuItem("📂  VS Code öffnen",    callback=lambda _: api_call("/api/vscode/open-jarvis", "POST")),
             None,
-            rumps.MenuItem("✕  Beenden",             callback=lambda _: rumps.quit_application()),
+            rumps.MenuItem("✕  Beenden",            callback=lambda _: rumps.quit_application()),
         ]
 
     def _poll(self):
-        import time
         while True:
             try:
                 with self._lock:
-                    running = self._state["running"]
-                    task    = self._state["current_task"]
-                    stats   = self._state["stats"]
+                    running  = self._state["running"]
+                    task     = self._state["current_task"]
+                    stats    = self._state["stats"]
                     pw_alerts = len(self._state.get("password_alerts", []))
 
                 if running and task:

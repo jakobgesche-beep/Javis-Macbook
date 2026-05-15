@@ -20,8 +20,8 @@ hiddenimports = [
     'requests', 'urllib3',
     'anthropic',
     'password_vault', 'evaluator', 'computer',
-    'dashboard_app', 'menubar', 'feedback',
-    'AppKit', 'Foundation', 'objc',
+    'dashboard_app', 'menubar', 'feedback', 'native_window',
+    'AppKit', 'Foundation', 'objc', 'WebKit',
 ]
 
 a = Analysis(
@@ -80,5 +80,9 @@ app = BUNDLE(
         'NSRequiresAquaSystemAppearance': False,
         'LSMinimumSystemVersion': '12.0',
         'NSHumanReadableCopyright': 'Open Source',
+        'NSAppTransportSecurity': {
+            'NSAllowsLocalNetworking': True,
+            'NSAllowsArbitraryLoads': True,
+        },
     },
 )
