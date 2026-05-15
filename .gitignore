@@ -1,0 +1,10 @@
+venv/
+__pycache__/
+*.pyc
+config.json
+logs/
+data/
+.DS_Store
+build/
+dist/
+*.spec.bak

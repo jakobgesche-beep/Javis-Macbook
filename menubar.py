@@ -1,175 +1,104 @@
-"""
-Jarvis Menüleisten-App.
-Kleines Icon oben rechts im Mac — schneller Zugriff auf alles.
-"""
-
-import rumps
-import requests
-import subprocess
 import threading
 import webbrowser
-from pathlib import Path
+import requests
+import rumps
 
-API = "http://localhost:8080"
-BASE_DIR = Path(__file__).parent
+API = "http://127.0.0.1:8080"
 
 MODES = {
-    "programmieren": "💻 Programmieren",
-    "recherche":     "🔍 Recherche",
-    "musik":         "🎵 Musik",
-    "pause":         "⏸ Pause",
+    "programmieren": ("💻", "Programmieren"),
+    "recherche":     ("🔍", "Recherche"),
+    "musik":         ("🎵", "Musik"),
+    "pause":         ("⏸",  "Pause"),
 }
 
 
-def api(path, method="GET", json=None):
+def api_call(path, method="GET", json=None):
     try:
         fn = requests.post if method == "POST" else requests.get
-        r = fn(f"{API}{path}", json=json, timeout=2)
-        return r.json()
+        return fn(f"{API}{path}", json=json, timeout=2).json()
     except Exception:
         return {}
 
 
-class JarvisApp(rumps.App):
+class JarvisMenuBar(rumps.App):
 
-    def __init__(self):
+    def __init__(self, state: dict, state_lock: threading.Lock):
         super().__init__("🤖", quit_button=None)
+        self._state = state
+        self._lock  = state_lock
         self._build_menu()
-        self._running = False
-        self._current_mode = "pause"
-        self._task = None
-        self._start_polling()
+        threading.Thread(target=self._poll, daemon=True).start()
 
     def _build_menu(self):
+        # Status-Zeile (nicht klickbar)
+        self._status_item = rumps.MenuItem("Jarvis — Gestoppt")
+        self._status_item.set_callback(None)
+
+        # Start / Stop
+        self._start_item = rumps.MenuItem("▶  Starten",  callback=self._start)
+        self._stop_item  = rumps.MenuItem("⏹  Stoppen",  callback=self._stop)
+
+        # Modi-Untermenü
+        mode_menu = rumps.MenuItem("⚡  Modus wechseln")
+        for key, (icon, label) in MODES.items():
+            mode_menu.add(rumps.MenuItem(
+                f"{icon}  {label}",
+                callback=lambda _, k=key: api_call("/api/mode", "POST", {"mode": k})
+                         or rumps.notification("Jarvis", f"Modus: {MODES[k][1]}", "")
+            ))
+
         self.menu = [
-            rumps.MenuItem("Jarvis — Gestoppt", callback=None),
-            None,  # Separator
-            rumps.MenuItem("▶  Starten",  callback=self.start),
-            rumps.MenuItem("⏹  Stoppen",  callback=self.stop),
+            self._status_item,
             None,
-            rumps.MenuItem("Modi", callback=None),
+            self._start_item,
+            self._stop_item,
+            None,
+            mode_menu,
+            None,
+            rumps.MenuItem("🌐  Dashboard öffnen",   callback=lambda _: webbrowser.open("http://127.0.0.1:8080")),
+            rumps.MenuItem("📂  VS Code öffnen",     callback=lambda _: api_call("/api/vscode/open-jarvis", "POST")),
+            rumps.MenuItem("🔐  Passwörter",          callback=lambda _: webbrowser.open("http://127.0.0.1:8080")),
+            None,
+            rumps.MenuItem("✕  Beenden",             callback=lambda _: rumps.quit_application()),
         ]
 
-        # Modi als Untermenü
-        mode_menu = rumps.MenuItem("Modi")
-        for key, label in MODES.items():
-            item = rumps.MenuItem(label, callback=lambda sender, k=key: self.set_mode(sender, k))
-            mode_menu.add(item)
-        self.menu["Modi"] = mode_menu
-
-        self.menu.add(None)
-        self.menu.add(rumps.MenuItem("🌐  Dashboard öffnen", callback=self.open_dashboard))
-        self.menu.add(rumps.MenuItem("📂  VS Code öffnen",  callback=self.open_vscode))
-        self.menu.add(None)
-        self.menu.add(rumps.MenuItem("🔐  Passwörter",      callback=self.open_passwords))
-        self.menu.add(None)
-        self.menu.add(rumps.MenuItem("⚙  Einstellungen",   callback=self.open_settings))
-        self.menu.add(rumps.MenuItem("✕  Beenden",          callback=self.quit_app))
-
-    def _start_polling(self):
-        t = threading.Thread(target=self._poll_loop, daemon=True)
-        t.start()
-
-    def _poll_loop(self):
+    def _poll(self):
+        import time
         while True:
             try:
-                d = api("/api/status")
-                if d:
-                    running  = d.get("running", False)
-                    task     = d.get("current_task")
-                    mode     = d.get("current_mode", "pause")
-                    stats    = d.get("stats", {})
-                    pw_alerts = len(d.get("password_alerts", []))
+                with self._lock:
+                    running = self._state["running"]
+                    task    = self._state["current_task"]
+                    stats   = self._state["stats"]
+                    pw_alerts = len(self._state.get("password_alerts", []))
 
-                    self._running = running
-                    self._current_mode = mode
-                    self._task = task
+                if running and task:
+                    self.title = "⚡"
+                    label = f"⚡ {task[:45]}"
+                elif running:
+                    self.title = "🤖"
+                    label = f"🟢 Läuft — ✓{stats['done']} erledigt"
+                else:
+                    self.title = "💤"
+                    label = "💤 Gestoppt"
 
-                    # Icon je nach Status
-                    if running and task:
-                        self.title = "⚡"
-                    elif running:
-                        self.title = "🤖"
-                    else:
-                        self.title = "💤"
+                if pw_alerts:
+                    label += f"  · 🔑 {pw_alerts}"
 
-                    # Status-Zeile im Menü
-                    status_line = self.menu["Jarvis — Gestoppt"]
-                    if not status_line:
-                        # Fallback: erstes Item
-                        status_line = list(self.menu.values())[0]
-
-                    label = MODES.get(mode, mode)
-                    if running and task:
-                        status_text = f"⚡ {task[:40]}"
-                    elif running:
-                        status_text = f"🟢 Läuft · {label} · ✓{stats.get('done',0)}"
-                    else:
-                        status_text = f"💤 Gestoppt · {label}"
-
-                    if pw_alerts > 0:
-                        status_text += f" · 🔑 {pw_alerts} Passwort-Alert"
-
-                    # Menü-Titel updaten (thread-sicher über Timer-Trick)
-                    self._update_status_label(status_text, running)
+                self._status_item.title = label
 
             except Exception:
-                self.title = "🤖"
-
-            import time
+                pass
             time.sleep(3)
 
-    @rumps.timer(3)
-    def _refresh_title(self, _):
-        pass  # Polling läuft im Thread, kein Extra-Timer nötig
-
-    def _update_status_label(self, text, running):
-        try:
-            for key in list(self.menu.keys()):
-                if "Jarvis" in key or "Gestoppt" in key or "Läuft" in key or "Gestoppt" in str(key):
-                    item = self.menu[key]
-                    if hasattr(item, 'title'):
-                        item.title = text
-                    break
-        except Exception:
-            pass
-
-    # ── Aktionen ──────────────────────────────────────────────────────────────
-
-    def start(self, _):
-        api("/api/start", "POST")
+    def _start(self, _):
+        api_call("/api/start", "POST")
         rumps.notification("Jarvis", "Gestartet", "Task-Loop läuft.")
 
-    def stop(self, _):
-        api("/api/stop", "POST")
-        rumps.notification("Jarvis", "Gestoppt", "Task-Loop angehalten.")
+    def _stop(self, _):
+        api_call("/api/stop", "POST")
+        rumps.notification("Jarvis", "Gestoppt", "")
 
-    def set_mode(self, _, mode_key):
-        result = api("/api/mode", "POST", {"mode": mode_key})
-        if result.get("ok"):
-            label = MODES.get(mode_key, mode_key)
-            rumps.notification("Jarvis", f"Modus: {label}", "")
-
-    def open_dashboard(self, _):
-        webbrowser.open("http://localhost:8080")
-
-    def open_passwords(self, _):
-        webbrowser.open("http://localhost:8080/#passwords")
-
-    def open_settings(self, _):
-        webbrowser.open("http://localhost:8080/#settings")
-
-    def open_vscode(self, _):
-        api("/api/vscode/open-jarvis", "POST")
-
-    def quit_app(self, _):
-        rumps.quit_application()
-
-
-def run_menubar():
-    app = JarvisApp()
-    app.run()
-
-
-if __name__ == "__main__":
-    run_menubar()
+    def run(self):
+        super().run()

@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MacBook Jarvis</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #ffffff;
+      color: #111;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    nav {
+      width: 100%;
+      max-width: 900px;
+      padding: 28px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    .logo span { color: #2563eb; }
+
+    nav a {
+      color: #555;
+      text-decoration: none;
+      font-size: 14px;
+    }
+    nav a:hover { color: #111; }
+
+    /* Hero */
+    .hero {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 80px 24px 60px;
+      max-width: 700px;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #eff6ff;
+      color: #2563eb;
+      border: 1px solid #bfdbfe;
+      border-radius: 999px;
+      padding: 4px 14px;
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 28px;
+    }
+
+    h1 {
+      font-size: clamp(36px, 6vw, 64px);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -2px;
+      color: #0a0a0a;
+      margin-bottom: 20px;
+    }
+
+    h1 span { color: #2563eb; }
+
+    .subtitle {
+      font-size: 18px;
+      color: #555;
+      line-height: 1.6;
+      max-width: 520px;
+      margin-bottom: 44px;
+    }
+
+    .download-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #2563eb;
+      color: white;
+      text-decoration: none;
+      padding: 16px 36px;
+      border-radius: 12px;
+      font-size: 17px;
+      font-weight: 600;
+      transition: background 0.15s, transform 0.1s;
+      box-shadow: 0 4px 20px rgba(37,99,235,0.35);
+    }
+
+    .download-btn:hover {
+      background: #1d4ed8;
+      transform: translateY(-1px);
+    }
+
+    .download-btn:active { transform: translateY(0); }
+
+    .download-meta {
+      margin-top: 14px;
+      font-size: 13px;
+      color: #999;
+    }
+
+    .download-meta a { color: #2563eb; text-decoration: none; }
+    .download-meta a:hover { text-decoration: underline; }
+
+    /* Features */
+    .features {
+      width: 100%;
+      max-width: 900px;
+      padding: 0 24px 100px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+    }
+
+    .feature {
+      padding: 24px;
+      border: 1px solid #e5e7eb;
+      border-radius: 16px;
+    }
+
+    .feature-icon {
+      font-size: 28px;
+      margin-bottom: 12px;
+    }
+
+    .feature h3 {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #111;
+    }
+
+    .feature p {
+      font-size: 13px;
+      color: #666;
+      line-height: 1.5;
+    }
+
+    /* Install note */
+    .install-note {
+      width: 100%;
+      max-width: 700px;
+      padding: 0 24px 60px;
+    }
+
+    .install-box {
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 20px 24px;
+    }
+
+    .install-box h3 {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: #374151;
+    }
+
+    .step {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 10px;
+      font-size: 13px;
+      color: #555;
+    }
+
+    .step-num {
+      background: #2563eb;
+      color: white;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      font-size: 11px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    footer {
+      width: 100%;
+      border-top: 1px solid #e5e7eb;
+      padding: 20px 24px;
+      text-align: center;
+      font-size: 13px;
+      color: #999;
+    }
+
+    footer a { color: #2563eb; text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">🤖 <span>Jarvis</span></div>
+  <a href="https://github.com/DEIN_GITHUB/macbook-jarvis" target="_blank">GitHub →</a>
+</nav>
+
+<section class="hero">
+  <div class="badge">Kostenlos & Open Source</div>
+  <h1>Dein Mac arbeitet.<br><span>Du nicht mehr.</span></h1>
+  <p class="subtitle">
+    MacBook Jarvis ist ein KI-Supervisor der im Hintergrund läuft,
+    Claude Code autonom steuert und deinen Mac vollständig kontrolliert.
+  </p>
+
+  <a class="download-btn" href="https://github.com/DEIN_GITHUB/macbook-jarvis/releases/latest/download/MacBook-Jarvis-1.0.0.dmg" download>
+    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+      <path d="M12 15V3m0 12l-4-4m4 4l4-4M3 17v2a2 2 0 002 2h14a2 2 0 002-2v-2"/>
+    </svg>
+    Für Mac herunterladen
+  </a>
+
+  <div class="download-meta">
+    macOS 12+ · Kostenlos · Keine Registrierung ·
+    <a href="https://github.com/DEIN_GITHUB/macbook-jarvis" target="_blank">Quellcode ansehen</a>
+  </div>
+</section>
+
+<section class="features">
+  <div class="feature">
+    <div class="feature-icon">⚡</div>
+    <h3>Autonomer Task-Loop</h3>
+    <p>Legt Aufgaben in eine Liste — Jarvis erledigt sie automatisch mit Claude Code und bewertet das Ergebnis.</p>
+  </div>
+  <div class="feature">
+    <div class="feature-icon">🧠</div>
+    <h3>Lokale KI-Bewertung</h3>
+    <p>264+ Fehlermuster erkennen ob eine Aufgabe wirklich erledigt wurde. Kein API-Key nötig.</p>
+  </div>
+  <div class="feature">
+    <div class="feature-icon">💻</div>
+    <h3>Mac-Steuerung</h3>
+    <p>Öffnet Apps, schließt Tabs, wechselt Modi per Sprachbefehl. Alles per AppleScript.</p>
+  </div>
+  <div class="feature">
+    <div class="feature-icon">🔐</div>
+    <h3>Passwort-Vault</h3>
+    <p>Verschlüsselt gespeichert. Erkennt automatisch wenn ein Passwort falsch ist.</p>
+  </div>
+  <div class="feature">
+    <div class="feature-icon">🤖</div>
+    <h3>Menüleisten-App</h3>
+    <p>Immer griffbereit in der Menüleiste. Dashboard im Browser. Alles lokal.</p>
+  </div>
+  <div class="feature">
+    <div class="feature-icon">🎙</div>
+    <h3>Sprachsteuerung</h3>
+    <p>Siri Shortcut → Jarvis wechselt den Modus. Kein Tippen, keine Maus nötig.</p>
+  </div>
+</section>
+
+<section class="install-note">
+  <div class="install-box">
+    <h3>Erste Öffnung — macOS Sicherheitshinweis</h3>
+    <div class="step">
+      <div class="step-num">1</div>
+      <div>DMG herunterladen und Jarvis in den <strong>Programme</strong>-Ordner ziehen</div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div>macOS zeigt einen Sicherheitshinweis — das ist normal bei Apps ohne Apple-Zertifikat</div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div><strong>Rechtsklick</strong> auf Jarvis.app → <strong>Öffnen</strong> → Bestätigen</div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div>Fertig — Jarvis erscheint in der Menüleiste und startet automatisch bei jedem Login</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  Open Source ·
+  <a href="https://github.com/DEIN_GITHUB/macbook-jarvis" target="_blank">GitHub</a> ·
+  Gebaut mit Claude Code
+</footer>
+
+</body>
+</html>
